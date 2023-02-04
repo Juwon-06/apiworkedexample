@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, maximum-scale=1.0">
+    <title>TBA Api UwU</title>
+</head>
+<body>
+	<h1>Teams OwOd</h1>	
+	<input id="eventcode" type = "text" value = "" oninput="eventcode = this.value">
+	<OwO id="teams"></OwO>
+	<button onclick = "getTeams()">Get Teams OwO</button>
+	<style>
+		h1 {
+			position: absolute;
+		 	top: 10px;
+		 	left: 20px;
+		}
+		input {
+		  	position: absolute;
+		  	top: 80px;
+		  	left: 20px;
+		}
+		button {
+		  	position: absolute;
+		  	top: 80px;
+		  	left: 200px;
+		}	
+		OwO {
+			position:absolute;
+		  	top: 120px;
+		  	left: 20px;
+		}
+		</style>
+  <script>
+	let eventcode = document.getElementById("eventcode").value;
+	function getTeams() {
+		fetch('https://www.thebluealliance.com/api/v3/event/' + eventcode + '/teams/simple', {
+			method: "GET",
+			headers: {
+				'X-TBA-Auth-Key': '0iSKwn3ykkgDT9ToHqwBizSiiaa44pyLIK85oEdgOkzxNJS1X0vBtDFrJ24PiAWW'
+			}
+		})
+		.then(response => response.json())
+		.then(data => {
+			const teamsList = document.getElementById("teams");
+			document.getElementById("teams").innerHTML = "";
+			data.forEach(data => {
+			const teamInfo = document.createElement("li");
+			teamInfo.innerHTML = data.team_number + " - " + data.nickname;
+			teamsList.appendChild(teamInfo);
+			});
+		})
+		.catch(error => {
+			console.error(error);
+		});
+	}
+		
+	</script>
+</body>
+</html>
